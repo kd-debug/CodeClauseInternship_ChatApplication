@@ -52,7 +52,7 @@ function Footer() {
                     <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" style={iconLinkStyle} title="LinkedIn" onMouseOver={e => e.currentTarget.style.color = 'var(--link-color)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-color)'}>
                         <IoLogoLinkedin />
                     </a>
-                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" style={iconLinkStyle} title="GitHub" onMouseOver={e => e.currentTarget.style.color = 'var(--link-color)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-color)'}>
+                    <a href="https://github.com/kd-debug/CodeClauseInternship_ChatApplication" target="_blank" rel="noopener noreferrer" style={iconLinkStyle} title="GitHub" onMouseOver={e => e.currentTarget.style.color = 'var(--link-color)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-color)'}>
                         <IoLogoGithub />
                     </a>
                     <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" style={iconLinkStyle} title="Twitter" onMouseOver={e => e.currentTarget.style.color = 'var(--link-color)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-color)'}>
