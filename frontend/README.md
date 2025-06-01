@@ -1,46 +1,92 @@
-# Getting Started with Create React App
+# ConnectSphere - Real-time Chat Application (Frontend)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the frontend for ConnectSphere, a real-time chat application built with React, Socket.IO, and Supabase.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+*   **User Authentication:** Secure signup, login, and logout functionality using Supabase Auth.
+*   **Real-time Messaging:** Instantaneous message delivery within chat rooms using Socket.IO.
+*   **Room Management:**
+    *   Users can create new chat rooms.
+    *   Dashboard with "My Rooms" and "Discover Rooms" tabs.
+    *   Users can request to join rooms.
+    *   Room creators/admins can manage join requests (approve/deny).
+    *   Room creators can delete rooms they created.
+*   **File Sharing:** Users can upload and share images and videos within chat rooms, leveraging Supabase Storage.
+*   **User Profiles:** Basic user profiles with avatars based on gender selection during signup.
+*   **Admin Panels:** In-room panels for admins to view members and manage pending join requests.
+*   **Responsive UI:** Styled for a good experience across devices.
+*   **Theming:** Light and Dark mode support, with theme preference saved in local storage.
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+*   **React:** JavaScript library for building user interfaces.
+*   **React Router:** For client-side routing.
+*   **Socket.IO Client:** For real-time, bidirectional event-based communication.
+*   **Supabase Client JS:** To interact with Supabase for authentication, database operations, and storage.
+*   **`react-icons`:** For UI icons.
+*   **CSS:** Custom styling with CSS variables for theming.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Project Structure (Key Frontend Directories/Files)
 
-### `npm test`
+*   `public/`: Static assets.
+    *   `index.html`: Main HTML shell.
+    *   `manifest.json`: Web app manifest.
+*   `src/`: Main application source code.
+    *   `App.jsx`: Main application component with routing.
+    *   `index.js`: Entry point of the React application.
+    *   `index.css`: Global styles and CSS variables for theming.
+    *   `App.css`: App-specific global styles.
+    *   `supabaseClient.js`: Supabase client initialization.
+    *   `components/`: Reusable UI components (e.g., `Navbar.jsx`, `Footer.jsx`).
+    *   `pages/`: Top-level page components (e.g., `Login.jsx`, `Signup.jsx`, `Dashboard.jsx`, `RoomChat.jsx`).
+    *   `context/`: React context for global state management (e.g., `AuthContext.jsx`).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Setup and Running Locally
 
-### `npm run build`
+1.  **Prerequisites:**
+    *   Node.js and npm (or yarn) installed.
+    *   A Supabase project set up with the required database schema, RLS policies, storage bucket (`message-files`), and SQL functions.
+    *   The backend server for this project running.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2.  **Clone the Repository (if applicable):**
+    ```bash
+    git clone <repository-url>
+    cd <project-folder>/frontend
+    ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3.  **Install Dependencies:**
+    ```bash
+    npm install
+    # or
+    # yarn install
+    ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4.  **Configure Environment Variables:**
+    Create a `.env` file in the `frontend` directory with the following variables:
+    ```env
+    REACT_APP_SUPABASE_URL=your_supabase_project_url
+    REACT_APP_SUPABASE_KEY=your_supabase_anon_key
+    REACT_APP_BACKEND_URL=http://localhost:3001 # Or your backend server URL
+    ```
+    Replace `your_supabase_project_url` and `your_supabase_anon_key` with your actual Supabase project credentials.
 
-### `npm run eject`
+5.  **Start the Development Server:**
+    ```bash
+    npm start
+    # or
+    # yarn start
+    ```
+    The application should now be running, typically at `http://localhost:3000`.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Backend
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This frontend requires the corresponding [ConnectSphere Backend](<link-to-your-backend-repo-if-separate>) to be running. Ensure the backend's `.env` file is also configured with its Supabase URL and `service_role` key, and the correct `FRONTEND_URL`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Contributing
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Please refer to the main project repository for contribution guidelines.
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+*This README was generated as part of the ConnectSphere development process.*

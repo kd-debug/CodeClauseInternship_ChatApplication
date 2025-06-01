@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../supabaseClient';
 import { useAuth } from '../context/AuthContext';
-import { Link } from 'react-router-dom'; // For linking to room chats later
-import { IoTrashOutline } from 'react-icons/io5'; // Icon for delete
+import { Link } from 'react-router-dom';
+import { IoTrashOutline } from 'react-icons/io5';
 
 function Dashboard() {
     const { user, profile } = useAuth();
@@ -10,10 +10,9 @@ function Dashboard() {
     const [rooms, setRooms] = useState([]);
     const [loadingRooms, setLoadingRooms] = useState(true);
     const [error, setError] = useState('');
-    const [activeTab, setActiveTab] = useState('myRooms'); // 'myRooms' or 'discoverRooms'
+    const [activeTab, setActiveTab] = useState('myRooms');
     const [message, setMessage] = useState('');
 
-    // Inline styles for dashboard elements (moved to top)
     const pageStyle = { padding: '20px 30px', maxWidth: '1200px', margin: '0 auto' };
     const headerStyle = { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' };
     const welcomeMsgStyle = { fontSize: '1.8rem', fontWeight: '600', margin: 0, color: 'var(--text-color)' };
@@ -54,7 +53,6 @@ function Dashboard() {
     };
     const actionButtonStyle = { padding: '8px 15px', borderRadius: '6px', border: 'none', background: 'var(--button-bg)', color: 'var(--button-text)', cursor: 'pointer', textDecoration: 'none', fontSize: '0.9rem', fontWeight: '500' };
 
-
     const fetchRooms = useCallback(async () => {
         setLoadingRooms(true);
         setError('');
@@ -67,9 +65,7 @@ function Dashboard() {
             const { data, error: rpcError } = await supabase
                 .rpc('get_rooms_with_last_message', { p_user_id: user.id });
 
-            if (rpcError) {
-                throw rpcError;
-            }
+            if (rpcError) throw rpcError;
 
             const formattedRooms = (data || []).map(room => ({
                 id: room.id,
@@ -95,11 +91,10 @@ function Dashboard() {
             setRooms(formattedRooms);
         } catch (err) {
             setError(`Failed to fetch rooms: ${err.message}`);
-            console.error(err);
         } finally {
             setLoadingRooms(false);
         }
-    }, [user]); // Added user to dependency array
+    }, [user]);
 
     useEffect(() => {
         if (user) {
@@ -113,18 +108,12 @@ function Dashboard() {
             setError("Room name cannot be empty.");
             return;
         }
-        if (!user || !profile) {
+        if (!user || !profile || !user.id) {
             setError("You must be logged in to create a room.");
             return;
         }
         setError('');
         setMessage('');
-
-        if (!user || !user.id) {
-            setError("User ID is not available. Cannot create room. Please try logging out and back in.");
-            return;
-        }
-
         try {
             const { data: newRoom, error: createRoomError } = await supabase
                 .from('rooms')
@@ -145,8 +134,7 @@ function Dashboard() {
                 });
 
             if (addMemberError) {
-                console.error("Failed to add creator as room member:", addMemberError);
-                setError(`Room created, but failed to add you as admin member: ${addMemberError.message}. Please contact support.`);
+                setError(`Room created, but failed to add you as admin member: ${addMemberError.message}.`);
             } else {
                 setMessage(`Room "${roomName}" created successfully!`);
                 setRoomName('');
@@ -154,7 +142,6 @@ function Dashboard() {
             }
         } catch (err) {
             setError(`Failed to create room: ${err.message}`);
-            console.error(err);
         }
     };
 
@@ -196,7 +183,6 @@ function Dashboard() {
             fetchRooms();
         } catch (err) {
             setError(`Failed to send join request: ${err.message}`);
-            console.error("Join request error:", err);
         }
     };
 
@@ -221,21 +207,18 @@ function Dashboard() {
             fetchRooms();
         } catch (err) {
             setError(`Failed to delete room: ${err.message}`);
-            console.error("Delete room error:", err);
         }
     };
 
     if (!profile && loadingRooms) {
         return <div style={pageStyle}><p style={{ color: 'var(--text-color)' }}>Loading user profile and rooms...</p></div>;
     }
-    if (loadingRooms && !rooms.length) { // Show loading rooms if rooms array is empty and still loading
+    if (loadingRooms && !rooms.length) {
         return <div style={pageStyle}><p style={{ color: 'var(--text-color)' }}>Loading rooms...</p></div>;
     }
 
-
     const myRooms = rooms.filter(room => room.currentUserMembership?.status === 'member' || room.currentUserMembership?.is_admin);
     const discoverRooms = rooms.filter(room => !myRooms.find(myRoom => myRoom.id === room.id));
-
 
     const renderRoomList = (roomList, isMyRoomsTab) => {
         if (loadingRooms && !roomList.length) return <p style={{ textAlign: 'center', padding: '20px', color: 'var(--text-color)' }}>Loading rooms...</p>;

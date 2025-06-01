@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // Import useAuth
-import { IoChatbubbleEllipsesOutline, IoSunnyOutline, IoMoonOutline } from 'react-icons/io5'; // Import icons
+import { useAuth } from '../context/AuthContext';
+import { IoChatbubbleEllipsesOutline, IoSunnyOutline, IoMoonOutline } from 'react-icons/io5';
 
-// Theme toggle function using a body class
 const applyBodyTheme = (theme) => {
     if (theme === 'dark') {
         document.body.classList.add('dark-theme');
@@ -12,13 +11,11 @@ const applyBodyTheme = (theme) => {
         document.body.classList.add('light-theme');
         document.body.classList.remove('dark-theme');
     }
-    // The CSS variables in index.css will take care of styling
 };
 
 function Navbar() {
     const { user, profile, signOut } = useAuth();
     const navigate = useNavigate();
-    // Initialize theme from localStorage or default to 'light'
     const [currentTheme, setCurrentTheme] = useState(() => {
         const savedTheme = localStorage.getItem('connectsphere-theme');
         return savedTheme || 'light';
@@ -36,10 +33,9 @@ function Navbar() {
     const handleLogout = async () => {
         try {
             await signOut();
-            navigate('/login'); // Redirect to login after logout
+            navigate('/login');
         } catch (error) {
             console.error("Error logging out:", error);
-            // Handle logout error (e.g., show a notification)
         }
     };
 
@@ -66,9 +62,9 @@ function Navbar() {
                     style={{
                         background: 'none',
                         border: 'none',
-                        color: 'var(--link-color)', // Use link color for icon buttons
+                        color: 'var(--link-color)',
                         cursor: 'pointer',
-                        fontSize: '1.5rem', // Adjust icon size
+                        fontSize: '1.5rem',
                         marginRight: '20px',
                         padding: '5px'
                     }}
@@ -90,11 +86,11 @@ function Navbar() {
                         <button
                             onClick={handleLogout}
                             style={{
-                                background: 'none', // Make it look less like a prominent button
-                                border: '1px solid var(--border-color)', // Subtle border
-                                color: 'var(--text-color)', // Use general text color that adapts
+                                background: 'none',
+                                border: '1px solid var(--border-color)',
+                                color: 'var(--text-color)',
                                 cursor: 'pointer',
-                                padding: '7px 15px', // Adjusted padding
+                                padding: '7px 15px',
                                 borderRadius: '6px',
                                 fontWeight: '500',
                                 transition: 'background-color 0.2s ease, color 0.2s ease'

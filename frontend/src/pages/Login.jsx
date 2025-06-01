@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
-import { useNavigate, Link } from 'react-router-dom'; // Added Link
-import { IoChatbubbleEllipsesOutline, IoLogInOutline, IoPersonAddOutline, IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5'; // Import icons
+import { useNavigate, Link } from 'react-router-dom';
+import { IoChatbubbleEllipsesOutline, IoLogInOutline, IoPersonAddOutline, IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
 
 function Login() {
     const navigate = useNavigate();
-    const [emailOrUsername, setEmailOrUsername] = useState(''); // Can be email or username
+    const [emailOrUsername, setEmailOrUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    // Redirect if user is already logged in
     useEffect(() => {
         const checkUser = async () => {
             const { data: { session } } = await supabase.auth.getSession();
@@ -35,15 +34,9 @@ function Login() {
 
         let emailToLogin = emailOrUsername;
 
-
-
-        // Log the credentials being sent for debugging
-        console.log('Attempting to log in with email:', emailToLogin);
-        console.log('Attempting to log in with password:', password); // For debugging only, remove in production
-
         try {
             const { data, error: signInError } = await supabase.auth.signInWithPassword({
-                email: emailToLogin, // Supabase auth typically uses email
+                email: emailToLogin,
                 password,
             });
 
@@ -54,34 +47,29 @@ function Login() {
             }
 
             if (data.user && data.session) {
-                // Login successful
-                // The session is automatically handled by supabase-js, including localStorage.
-                // The AuthProvider in App.jsx will pick up the session change.
-                navigate('/dashboard'); // Redirect to dashboard
+                navigate('/dashboard');
             } else {
                 setError("Login failed. Please check your credentials.");
             }
         } catch (err) {
             setError(err.message || "An unexpected error occurred during login.");
-            console.error("Login catch error:", err);
         } finally {
             setLoading(false);
         }
     };
 
-    // Basic styles (can be moved to a CSS file)
     const pageStyle = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        minHeight: 'calc(100vh - 70px)', // Adjust based on navbar height
+        minHeight: 'calc(100vh - 70px)',
         padding: '20px',
         backgroundColor: 'var(--background-color)',
         color: 'var(--text-color)',
     };
     const formContainerStyle = {
-        backgroundColor: 'var(--navbar-bg)', // Using navbar-bg for contrast as in example
+        backgroundColor: 'var(--navbar-bg)',
         padding: '30px 40px',
         borderRadius: '12px',
         boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
@@ -121,8 +109,8 @@ function Login() {
         padding: '12px 15px',
         borderRadius: '6px',
         border: 'none',
-        backgroundColor: 'var(--button-bg)', // Use theme variable
-        color: 'var(--button-text)', // Use theme variable
+        backgroundColor: 'var(--button-bg)',
+        color: 'var(--button-text)',
         fontSize: '1.1rem',
         fontWeight: 'bold',
         cursor: 'pointer',
@@ -143,11 +131,12 @@ function Login() {
             <div style={formContainerStyle}>
                 <IoChatbubbleEllipsesOutline style={{ fontSize: '3.5rem', color: 'var(--link-color)', marginBottom: '5px' }} />
                 <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--link-color)', marginBottom: '5px' }}>ConnectSphere</h1>
-                <p style={{ color: 'var(--text-color)', marginBottom: '25px', fontSize: '1.1rem' }}>Just talk. We’ve got the rest.</p>
+                <p style={{ color: 'var(--text-color)', marginBottom: '25px', fontSize: '1.1rem' }}>Your World, Seamlessly Connected.</p>
 
                 <h2 style={{ marginBottom: '10px', fontWeight: '600', fontSize: '1.8rem' }}>Welcome Back!</h2>
+                <p style={{ marginBottom: '25px', color: 'var(--text-color)' }}>Login with your username or email.</p>
 
-                {error && <p style={{ color: 'red', marginBottom: '15px' }}>{error}</p>}
+                {error && <p style={{ color: 'var(--error-text)', marginBottom: '15px' }}>{error}</p>}
                 <form onSubmit={handleLogin}>
                     <input
                         type="text"

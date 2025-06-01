@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [session, setSession] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [profile, setProfile] = useState(null); // To store user profile data like username, avatar
+    const [profile, setProfile] = useState(null);
 
     useEffect(() => {
         const getSession = async () => {
@@ -19,6 +19,9 @@ export const AuthProvider = ({ children }) => {
             }
             setSession(currentSession);
             setUser(currentSession?.user ?? null);
+            if (currentSession?.user) {
+                fetchUserProfile(currentSession.user.id);
+            }
             setLoading(false);
         };
 
@@ -27,13 +30,14 @@ export const AuthProvider = ({ children }) => {
         const { data: authListener } = supabase.auth.onAuthStateChange(
             async (_event, currentSession) => {
                 setSession(currentSession);
-                setUser(currentSession?.user ?? null);
-                setLoading(false);
-                if (currentSession?.user && !profile) { // Fetch profile if user logs in and profile not yet loaded
-                    fetchUserProfile(currentSession.user.id);
-                } else if (!currentSession?.user) {
-                    setProfile(null); // Clear profile on logout
+                const newAuthUser = currentSession?.user ?? null;
+                setUser(newAuthUser);
+                if (newAuthUser) {
+                    fetchUserProfile(newAuthUser.id);
+                } else {
+                    setProfile(null);
                 }
+                setLoading(false);
             }
         );
 
@@ -42,9 +46,11 @@ export const AuthProvider = ({ children }) => {
         };
     }, []);
 
-    // Fetch user profile from 'users' table
     const fetchUserProfile = async (userId) => {
-        if (!userId) return;
+        if (!userId) {
+            setProfile(null); // Clear profile if no userId
+            return;
+        }
         try {
             const { data, error } = await supabase
                 .from('users')
@@ -54,7 +60,7 @@ export const AuthProvider = ({ children }) => {
 
             if (error) {
                 console.error('Error fetching user profile:', error.message);
-                setProfile(null); // Set profile to null or some error state
+                setProfile(null);
             } else {
                 setProfile(data);
             }
@@ -64,19 +70,19 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Fetch profile when user state changes and profile is not yet loaded
-    useEffect(() => {
-        if (user && !profile) {
-            fetchUserProfile(user.id);
-        }
-    }, [user]);
+    // This useEffect is redundant if fetchUserProfile is called within onAuthStateChange and getSession
+    // useEffect(() => {
+    //     if (user && !profile) { // Condition might be too restrictive if profile fetch failed once
+    //         fetchUserProfile(user.id);
+    //     }
+    // }, [user, profile]); // Depending on profile here can cause loops if fetchUserProfile sets profile to null on error
 
 
     const value = {
         session,
         user,
-        profile, // Add profile to context
-        fetchUserProfile, // Expose function to refetch profile if needed
+        profile,
+        fetchUserProfile,
         signOut: () => supabase.auth.signOut(),
         loading,
     };

@@ -1,9 +1,9 @@
 import React from 'react';
-import { IoChatbubbleEllipsesOutline, IoLogoLinkedin, IoLogoGithub, IoLogoTwitter } from 'react-icons/io5';
+import { IoChatbubbleEllipsesOutline, IoLogoLinkedin, IoLogoGithub } from 'react-icons/io5';
 
 function Footer() {
     const footerStyle = {
-        backgroundColor: 'var(--navbar-bg)', // Use navbar-bg for consistency or a dedicated footer-bg
+        backgroundColor: 'var(--navbar-bg)',
         color: 'var(--text-color)',
         padding: '25px 0',
         textAlign: 'center',
@@ -32,9 +32,6 @@ function Footer() {
         transition: 'color 0.2s ease-in-out',
     };
 
-    // Hover effect can be done with CSS if preferred, or simple JS like this for direct style
-    // For CSS: a:hover { color: var(--link-color); }
-
     return (
         <footer style={footerStyle}>
             <div className="container">
@@ -45,15 +42,29 @@ function Footer() {
                 <p style={{ margin: '5px 0' }}>
                     &copy; {new Date().getFullYear()} ConnectSphere. All rights reserved.
                 </p>
-
                 <div style={socialIconsStyle}>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" style={iconLinkStyle} title="LinkedIn" onMouseOver={e => e.currentTarget.style.color = 'var(--link-color)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-color)'}>
+                    <a
+                        href="https://linkedin.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={iconLinkStyle}
+                        title="LinkedIn"
+                        onMouseOver={e => e.currentTarget.style.color = 'var(--link-color)'}
+                        onMouseOut={e => e.currentTarget.style.color = 'var(--text-color)'}
+                    >
                         <IoLogoLinkedin />
                     </a>
-                    <a href="https://github.com/kd-debug/CodeClauseInternship_ChatApplication" target="_blank" rel="noopener noreferrer" style={iconLinkStyle} title="GitHub" onMouseOver={e => e.currentTarget.style.color = 'var(--link-color)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-color)'}>
+                    <a
+                        href="https://github.com/kd-debug/CodeClauseInternship_ChatApplication"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={iconLinkStyle}
+                        title="GitHub"
+                        onMouseOver={e => e.currentTarget.style.color = 'var(--link-color)'}
+                        onMouseOut={e => e.currentTarget.style.color = 'var(--text-color)'}
+                    >
                         <IoLogoGithub />
                     </a>
-
                 </div>
             </div>
         </footer>

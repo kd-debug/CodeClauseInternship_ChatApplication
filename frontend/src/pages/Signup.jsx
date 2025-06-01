@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import { supabase } from '../supabaseClient';
-import { useNavigate, Link } from 'react-router-dom'; // Added Link
-import { IoChatbubbleEllipsesOutline, IoPersonAddOutline, IoLogInOutline, IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5'; // Import icons
+import { useNavigate, Link } from 'react-router-dom';
+import { IoChatbubbleEllipsesOutline, IoPersonAddOutline, IoLogInOutline, IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
 
-// Function to generate a simple placeholder avatar based on gender
 const getPlaceholderAvatar = (gender) => {
-    // These are just example URLs, replace with your actual placeholder avatar URLs
-    // or use a service like DiceBear Avatars, Gravatar, etc.
     if (gender === 'male') {
-        return 'https://avatar.iran.liara.run/public/boy?username=Scott'; // Example male avatar
+        return `https://avatar.iran.liara.run/public/boy?username=${Date.now()}`;
     } else if (gender === 'female') {
-        return 'https://avatar.iran.liara.run/public/girl?username=Scott'; // Example female avatar
+        return `https://avatar.iran.liara.run/public/girl?username=${Date.now()}`;
     } else {
-        return 'https://avatar.iran.liara.run/public'; // Example neutral avatar
+        return `https://avatar.iran.liara.run/public?username=${Date.now()}`;
     }
 };
 
@@ -24,7 +21,7 @@ function Signup() {
     const [showPassword, setShowPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [gender, setGender] = useState('male'); // Default gender
+    const [gender, setGender] = useState('male');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
@@ -49,7 +46,6 @@ function Signup() {
 
         setLoading(true);
         try {
-            // Step 1: Sign up the user with Supabase Auth
             const { data: authData, error: authError } = await supabase.auth.signUp({
                 email,
                 password,
@@ -67,7 +63,6 @@ function Signup() {
                 return;
             }
 
-            // Step 2: Call the RPC function to create the user profile
             const avatarUrl = getPlaceholderAvatar(gender);
             const { error: profileError } = await supabase.rpc('create_user_profile', {
                 user_id: authData.user.id,
@@ -78,17 +73,10 @@ function Signup() {
             });
 
             if (profileError) {
-                // If profile creation fails, it's a tricky situation.
-                // For now, we'll report the error. Ideally, you might want to clean up the auth user
-                // or have a retry mechanism.
                 setError(`User signed up, but profile creation failed: ${profileError.message}. Please contact support or try logging in.`);
-                // Log the auth user details for debugging if profile insertion fails
-                console.error("Auth user created but profile insertion failed:", authData.user);
-                // Potentially, you might want to sign the user out or delete the auth user if profile setup is critical
-                // await supabase.auth.signOut(); // or admin call to delete user
+                console.error("Auth user created but profile insertion failed via RPC:", profileError);
             } else {
                 setMessage("Signup successful! Please check your email to confirm your account. You will be redirected to login.");
-                // Clear form or redirect
                 setTimeout(() => {
                     navigate('/login');
                 }, 3000);
@@ -96,19 +84,17 @@ function Signup() {
 
         } catch (err) {
             setError(err.message || "An unexpected error occurred during signup.");
-            console.error("Signup catch error:", err);
         } finally {
             setLoading(false);
         }
     };
 
-    // Basic styles (can be moved to a CSS file)
     const pageStyle = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        minHeight: 'calc(100vh - 70px)', // Adjust based on navbar height
+        minHeight: 'calc(100vh - 70px)',
         padding: '20px',
         backgroundColor: 'var(--background-color)',
         color: 'var(--text-color)',
@@ -150,13 +136,13 @@ function Signup() {
         fontSize: '1.2rem'
     };
     const selectStyle = {
-        ...inputStyle, // Inherit base input styles
-        appearance: 'none', // Remove default arrow on some browsers
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23${getComputedStyle(document.documentElement).getPropertyValue('--text-color').substring(1)}'%3E%3Cpath d='M7 10l5 5 5-5H7z'/%3E%3C/svg%3E")`, // Custom arrow
+        ...inputStyle,
+        appearance: 'none',
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23${getComputedStyle(document.documentElement).getPropertyValue('--text-color').substring(1)}'%3E%3Cpath d='M7 10l5 5 5-5H7z'/%3E%3C/svg%3E")`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'right 15px center',
         backgroundSize: '1.2em',
-        paddingRight: '40px' // Make space for custom arrow
+        paddingRight: '40px'
     };
     const buttonStyle = {
         width: '100%',
@@ -186,12 +172,13 @@ function Signup() {
             <div style={formContainerStyle}>
                 <IoChatbubbleEllipsesOutline style={{ fontSize: '3.5rem', color: 'var(--link-color)', marginBottom: '5px' }} />
                 <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--link-color)', marginBottom: '5px' }}>ConnectSphere</h1>
-                <p style={{ color: 'var(--text-color)', marginBottom: '25px', fontSize: '1.1rem' }}>Just talk. We’ve got the rest.</p>
+                <p style={{ color: 'var(--text-color)', marginBottom: '25px', fontSize: '1.1rem' }}>Your World, Seamlessly Connected.</p>
 
                 <h2 style={{ marginBottom: '10px', fontWeight: '600', fontSize: '1.8rem' }}>Create Account</h2>
+                <p style={{ marginBottom: '25px', color: 'var(--text-color)' }}>Join us and start connecting!</p>
 
-                {message && <p style={{ color: 'green', marginBottom: '15px' }}>{message}</p>}
-                {error && <p style={{ color: 'red', marginBottom: '15px' }}>{error}</p>}
+                {message && <p style={{ color: 'var(--success-text)', marginBottom: '15px' }}>{message}</p>}
+                {error && <p style={{ color: 'var(--error-text)', marginBottom: '15px' }}>{error}</p>}
                 <form onSubmit={handleSignup}>
                     <input
                         type="text"

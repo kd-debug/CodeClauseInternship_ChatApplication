@@ -280,15 +280,13 @@ function RoomChat() {
     );
 }
 
-// Component-specific styles
 const pageLevelFeedbackStyle = { padding: '20px', textAlign: 'center', fontSize: '1.1rem' };
-const chatPageStyle = { display: 'flex', flexDirection: 'column', height: 'calc(100vh - 70px)', /* Approx Navbar height */ backgroundColor: 'var(--background-color)', color: 'var(--text-color)' };
+const chatPageStyle = { display: 'flex', flexDirection: 'column', height: 'calc(100vh - 70px)', backgroundColor: 'var(--background-color)', color: 'var(--text-color)' };
 const chatHeaderStyle = { padding: '15px 20px', borderBottom: '1px solid var(--border-color)', backgroundColor: 'var(--navbar-bg)' };
 const adminHeaderButtonStyle = { padding: '8px 12px', backgroundColor: 'var(--button-bg)', color: 'var(--button-text)', border: 'none', borderRadius: '6px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.9rem' };
 const panelStyle = { border: '1px solid var(--border-color)', backgroundColor: 'var(--card-bg)', padding: '15px', margin: '10px 20px', borderRadius: '8px', maxHeight: '200px', overflowY: 'auto' };
 const panelTitleStyle = { marginTop: '0', marginBottom: '10px', fontSize: '1.1rem', fontWeight: '600', borderBottom: '1px solid var(--border-color)', paddingBottom: '8px', color: 'var(--text-color)' };
 const listItemStyle = { display: 'flex', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid var(--border-color)', color: 'var(--text-color)' };
-// listItemStyle[':last-child'] = { borderBottom: 'none' }; // CSS way
 const avatarSmallStyle = { width: '30px', height: '30px', borderRadius: '50%', marginRight: '12px', objectFit: 'cover', border: '1px solid var(--border-color)' };
 const actionButtonBase = { background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.4rem', padding: '5px' };
 const approveButtonStyle = { ...actionButtonBase, color: 'var(--success-text)' };
