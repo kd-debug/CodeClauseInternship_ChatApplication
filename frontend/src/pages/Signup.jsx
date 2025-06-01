@@ -186,10 +186,9 @@ function Signup() {
             <div style={formContainerStyle}>
                 <IoChatbubbleEllipsesOutline style={{ fontSize: '3.5rem', color: 'var(--link-color)', marginBottom: '5px' }} />
                 <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--link-color)', marginBottom: '5px' }}>ConnectSphere</h1>
-                <p style={{ color: 'var(--text-color)', marginBottom: '25px', fontSize: '1.1rem' }}>Your World, Seamlessly Connected.</p>
+                <p style={{ color: 'var(--text-color)', marginBottom: '25px', fontSize: '1.1rem' }}>Just talk. We’ve got the rest.</p>
 
                 <h2 style={{ marginBottom: '10px', fontWeight: '600', fontSize: '1.8rem' }}>Create Account</h2>
-                <p style={{ marginBottom: '25px', color: 'var(--text-color)' }}>Join us and start connecting!</p>
 
                 {message && <p style={{ color: 'green', marginBottom: '15px' }}>{message}</p>}
                 {error && <p style={{ color: 'red', marginBottom: '15px' }}>{error}</p>}

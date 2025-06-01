@@ -45,9 +45,7 @@ function Footer() {
                 <p style={{ margin: '5px 0' }}>
                     &copy; {new Date().getFullYear()} ConnectSphere. All rights reserved.
                 </p>
-                <p style={{ fontSize: '0.8rem', opacity: 0.7, margin: '5px 0' }}>
-                    Your World, Seamlessly Connected.
-                </p>
+
                 <div style={socialIconsStyle}>
                     <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" style={iconLinkStyle} title="LinkedIn" onMouseOver={e => e.currentTarget.style.color = 'var(--link-color)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-color)'}>
                         <IoLogoLinkedin />
@@ -55,9 +53,7 @@ function Footer() {
                     <a href="https://github.com/kd-debug/CodeClauseInternship_ChatApplication" target="_blank" rel="noopener noreferrer" style={iconLinkStyle} title="GitHub" onMouseOver={e => e.currentTarget.style.color = 'var(--link-color)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-color)'}>
                         <IoLogoGithub />
                     </a>
-                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" style={iconLinkStyle} title="Twitter" onMouseOver={e => e.currentTarget.style.color = 'var(--link-color)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-color)'}>
-                        <IoLogoTwitter />
-                    </a>
+
                 </div>
             </div>
         </footer>

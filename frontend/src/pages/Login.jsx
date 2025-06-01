@@ -35,17 +35,7 @@ function Login() {
 
         let emailToLogin = emailOrUsername;
 
-        // Attempt to see if it's a username and fetch email
-        // This requires RLS to allow reading the users table for this purpose,
-        // or a dedicated database function (rpc).
-        // For simplicity, we'll assume email is used for login directly with Supabase Auth.
-        // If you want username login, you'd typically:
-        // 1. Create an RPC function in Supabase: `get_email_for_username(username_param TEXT)`
-        // 2. Call it: `const { data, error } = await supabase.rpc('get_email_for_username', { username_param: emailOrUsername })`
-        // 3. If email found, use it for `signInWithPassword`.
-        // For this example, we'll stick to email for Supabase Auth.
-        // If the user enters a username, this will likely fail unless their username is also their email.
-        // A more robust solution would involve the RPC call mentioned above.
+
 
         // Log the credentials being sent for debugging
         console.log('Attempting to log in with email:', emailToLogin);
@@ -153,10 +143,9 @@ function Login() {
             <div style={formContainerStyle}>
                 <IoChatbubbleEllipsesOutline style={{ fontSize: '3.5rem', color: 'var(--link-color)', marginBottom: '5px' }} />
                 <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--link-color)', marginBottom: '5px' }}>ConnectSphere</h1>
-                <p style={{ color: 'var(--text-color)', marginBottom: '25px', fontSize: '1.1rem' }}>Your World, Seamlessly Connected.</p>
+                <p style={{ color: 'var(--text-color)', marginBottom: '25px', fontSize: '1.1rem' }}>Just talk. We’ve got the rest.</p>
 
                 <h2 style={{ marginBottom: '10px', fontWeight: '600', fontSize: '1.8rem' }}>Welcome Back!</h2>
-                <p style={{ marginBottom: '25px', color: 'var(--text-color)' }}>Login with your username or email.</p>
 
                 {error && <p style={{ color: 'red', marginBottom: '15px' }}>{error}</p>}
                 <form onSubmit={handleLogin}>
