@@ -1,20 +1,18 @@
 /* Remove default CRA styles or override them */
+
 .App {
   /* text-align: center; */
   /* We'll control alignment per component */
 }
 
 .App-logo {
-  /* Remove or replace if not using the React logo */
   display: none;
 }
 
 .App-header {
-  /* Remove or replace if not using the default header */
   display: none;
 }
 
-/* General App Container - applied to a div wrapping <Routes> in App.jsx */
 .app-container {
   padding-top: 20px;
   /* Space below navbar */
@@ -26,7 +24,6 @@
   color: var(--text-color);
 }
 
-/* Styling for form elements to use CSS variables, can be more specific */
 input[type="text"],
 input[type="email"],
 input[type="password"],
