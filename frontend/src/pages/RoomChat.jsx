@@ -14,8 +14,8 @@ import {
 
 function RoomChat() {
     const { roomId } = useParams();
-    const navigate = useNavigate();
-    const { user, profile } = useAuth();
+    const navigate = useNavigate(); // Keep navigate if used for redirection on error/not member
+    const { user } = useAuth(); // Removed profile, as it's not directly used here
 
     const [roomDetails, setRoomDetails] = useState(null);
     const [messages, setMessages] = useState([]);
@@ -85,7 +85,7 @@ function RoomChat() {
         } finally {
             setIsLoading(false);
         }
-    }, [roomId, user, navigate]);
+    }, [roomId, user]); // Removed navigate from dependencies
 
     useEffect(() => {
         fetchRoomData();
